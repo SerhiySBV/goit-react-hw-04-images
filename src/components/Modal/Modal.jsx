@@ -1,29 +1,55 @@
-import { Component } from 'react';
+import { Component, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
 const modalRef = document.querySelector('#modal-root');
 
-export class Modal extends Component {
-  componentDidMount() {
-    window.addEventListener('keydown', this.onCloseByEsc);
-  }
-  componentWillUnmount() {
-    window.removeEventListener('keydown', this.onCloseByEsc);
-  }
-  onCloseByEsc = e => {
-    if (e.code === 'Escape') {
-      this.props.onClose();
-    }
-  };
-  render() {
-    const { largeImage, type, onClose } = this.props;
-    return createPortal(
-      <div onClick={onClose} className="Overlay">
-        <div className="Modal">
-          <img src={largeImage} alt={type} />
-        </div>
-      </div>,
-      modalRef
-    );
-  }
-}
+export const Modal = ({ largeImage, type, onClose }) => {
+  useEffect(() => {
+    const onCloseByEsc = e => {
+      if (e.code === 'Escape') {
+        onClose();
+      }
+    };
+
+    window.addEventListener('keydown', onCloseByEsc);
+    console.log('add eventListener');
+    return () => {
+      window.removeEventListener('keydown', onCloseByEsc);
+      console.log('remove eventListener');
+    };
+  }, [onClose]);
+
+  return createPortal(
+    <div onClick={onClose} className="Overlay">
+      <div className="Modal">
+        <img src={largeImage} alt={type} />
+      </div>
+    </div>,
+    modalRef
+  );
+};
+
+// export class Modal extends Component {
+//   componentDidMount() {
+//     window.addEventListener('keydown', this.onCloseByEsc);
+//   }
+//   componentWillUnmount() {
+//     window.removeEventListener('keydown', this.onCloseByEsc);
+//   }
+//   onCloseByEsc = e => {
+//     if (e.code === 'Escape') {
+//       this.props.onClose();
+//     }
+//   };
+//   render() {
+//     const { largeImage, type, onClose } = this.props;
+//     return createPortal(
+//       <div onClick={onClose} className="Overlay">
+//         <div className="Modal">
+//           <img src={largeImage} alt={type} />
+//         </div>
+//       </div>,
+//       modalRef
+//     );
+//   }
+// }
