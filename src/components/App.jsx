@@ -18,6 +18,7 @@ export const App = () => {
     }
     fetchImages(query, page)
       .then(resp => {
+        setIsLoading(true);
         setImages(prevImages =>
           page === 1 ? [...resp.hits] : [...prevImages, ...resp.hits]
         );
@@ -26,6 +27,7 @@ export const App = () => {
       .finally(() => {
         setIsLoading(false);
       });
+    return () => setImages([]);
   }, [page, query]);
 
   const hendleLoadMore = () => {
