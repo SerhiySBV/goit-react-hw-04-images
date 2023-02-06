@@ -13,6 +13,9 @@ export const App = () => {
   const [totalImages, setTotalImages] = useState(0);
 
   useEffect(() => {
+    if (!query) {
+      return;
+    }
     fetchImages(query, page)
       .then(resp => {
         setImages(page === 1 ? [...resp.hits] : [...images, ...resp.hits]);
