@@ -1,4 +1,4 @@
-import { Component, useEffect } from 'react';
+import { useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
 const modalRef = document.querySelector('#modal-root');
@@ -10,12 +10,9 @@ export const Modal = ({ largeImage, type, onClose }) => {
         onClose();
       }
     };
-
     window.addEventListener('keydown', onCloseByEsc);
-    console.log('add eventListener');
     return () => {
       window.removeEventListener('keydown', onCloseByEsc);
-      console.log('remove eventListener');
     };
   }, [onClose]);
 
@@ -28,6 +25,8 @@ export const Modal = ({ largeImage, type, onClose }) => {
     modalRef
   );
 };
+
+// cREATED BY CLASS
 
 // export class Modal extends Component {
 //   componentDidMount() {
