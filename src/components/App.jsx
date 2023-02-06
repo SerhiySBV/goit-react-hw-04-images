@@ -52,6 +52,8 @@ export const App = () => {
   );
 };
 
+// CREATED BY CLASS
+
 // export class Appold extends Component {
 // state = {
 //   query: '',
