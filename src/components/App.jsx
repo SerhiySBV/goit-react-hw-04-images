@@ -18,22 +18,22 @@ export const App = () => {
     }
     fetchImages(query, page)
       .then(resp => {
-        setImages(page === 1 ? [...resp.hits] : [...images, ...resp.hits]);
+        setImages(prevImages =>
+          page === 1 ? [...resp.hits] : [...prevImages, ...resp.hits]
+        );
         setTotalImages(resp.totalHits);
       })
       .finally(() => {
         setIsLoading(false);
       });
-  }, [images, page, query]);
+  }, [page, query]);
 
   const hendleLoadMore = () => {
-    setPage(page + 1);
-    setIsLoading(true);
+    setPage(page => page + 1);
   };
 
   const handleSubmit = query => {
     setQuery(query);
-    setIsLoading(true);
   };
 
   const reanderButtonOnLOader = () => {
