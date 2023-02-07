@@ -16,16 +16,18 @@ export const App = () => {
     if (!query) {
       return;
     }
-    fetchImages(query, page)
-      .then(resp => {
+    async function resImages() {
+      try {
+        const resp = await fetchImages(query, page);
         setImages(prevImages =>
           page === 1 ? [...resp.hits] : [...prevImages, ...resp.hits]
         );
         setTotalImages(resp.totalHits);
-      })
-      .finally(() => {
+      } finally {
         setIsLoading(false);
-      });
+      }
+    }
+    resImages();
   }, [page, query]);
 
   const hendleLoadMore = () => {
